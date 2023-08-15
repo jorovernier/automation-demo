@@ -10,17 +10,29 @@ afterEach(async () => {
     await driver.quit()
 })
 
-test("Test the Movies App", async () => {
-    await driver.get("http://localhost:3000/")
-    await driver.sleep(2000)
+describe('Test the Movies App', () => {
+    test('can add a movie', async () => {
+        await driver.get('http://localhost:3000/')
 
-    await driver.findElement(By.name('movieTitle')).sendKeys("Detective Pikachu")
-    await driver.sleep(2000)
+        // You can pass in the movie name dynamically by making a variable.
+        // let searchKey = 'Detective Pikachu'
 
-    await driver.findElement(By.css('button[type="submit"]')).click()
-    await driver.sleep(2000)
+        await driver.sleep(2000)
 
-    const addedMovie = await driver.wait(until.elementLocated(By.css('label[for="movie-0"]')), 1000)
+        await driver.findElement(By.css('input[name="movieTitle"]')).sendKeys('Detective Pikachu')
+        // await driver.findElement(By.css('input[name="movieTitle"]')).sendKeys(searchKey)
 
-    expect(await addedMovie.getText()).toBe("Detective Pikachu")
+        await driver.sleep(2000)
+
+        await driver.findElement(By.css('button[type="submit"]')).click()
+
+        await driver.sleep(2000)
+
+        const addedMovie = await driver.wait(until.elementLocated(By.css('#movies-list li label')), 1000)
+        // You can also select the label by the "for" attribute.
+        // const addedMovie = await driver.wait(until.elementLocated(By.css('label[for="movie-0"]')), 1000)
+
+        expect(await addedMovie.getText()).toBe('Detective Pikachu')
+        // expect(await addedMovie.getText()).toBe(searchKey)
+    })
 })
