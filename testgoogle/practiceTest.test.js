@@ -25,8 +25,8 @@ describe("Test the Google homepage", () => {
 
   test("can search Google and go to images tab", async () => {
     await driver.get("https://www.google.com/");
-    await driver.findElement(By.name("q")).sendKeys('typhlosion', Key.RETURN);
-    await driver.wait(until.titleIs('typhlosion - Google Search'), 1000);
+    await driver.findElement(By.name("q")).sendKeys('pikachu', Key.RETURN);
+    await driver.wait(until.titleIs('pikachu - Google Search'), 1000);
     await driver.findElement(By.linkText('Images')).click();
     const currentPage = await driver.wait(until.elementLocated(By.css('span[aria-current="page"]')), 1000)
     expect(await currentPage.getText()).toBe("Images")
